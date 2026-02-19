@@ -544,6 +544,18 @@ class Application extends Container implements
     }
 
     /**
+     * Get the path to the public directory.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function publicPath($path = '')
+    {
+        return $this->webPath($path);
+    }
+
+    /**
      * Get the root path of the project.
      *
      * @param string $path
@@ -757,6 +769,26 @@ class Application extends Container implements
         }
 
         return file_exists($filePath);
+    }
+
+    /**
+     * Get the maintenance mode manager instance.
+     *
+     * @return \Illuminate\Contracts\Foundation\MaintenanceMode
+     */
+    public function maintenanceMode()
+    {
+        return $this->make(\Illuminate\Contracts\Foundation\MaintenanceMode::class);
+    }
+
+    /**
+     * Determine if the application has debug mode enabled.
+     *
+     * @return bool
+     */
+    public function hasDebugModeEnabled()
+    {
+        return (bool) $this['config']->get('app.debug', false);
     }
 
     /**
@@ -991,9 +1023,9 @@ class Application extends Container implements
      *
      * @return Response A Response instance
      */
-    public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
+    public function handle(SymfonyRequest $request, int $type = self::MAIN_REQUEST, bool $catch = true): Response
     {
-        return $this[HttpKernelContract::class]->handle(Request::createFromBase($request));
+        return $this[HttpKernelContract::class]->handle(Request::createFromBase($request), $type, $catch);
     }
 
     /**
@@ -1422,7 +1454,7 @@ class Application extends Container implements
      *
      * @return $this
      */
-    public function terminating(Closure $callback)
+    public function terminating($callback)
     {
         $this->terminatingCallbacks[] = $callback;
 

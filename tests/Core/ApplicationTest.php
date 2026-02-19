@@ -163,7 +163,10 @@ class ApplicationTest extends TestCase
     public function testServiceProvidersAreCorrectlyRegistered()
     {
         $app = new Application();
-        $provider = $this->getMockBuilder('BasicServiceProvider')->setMethods(['register', 'boot'])->getMock();
+        $provider = $this->getMockBuilder('Illuminate\Support\ServiceProvider')
+            ->setConstructorArgs([$app])
+            ->onlyMethods(['register'])
+            ->getMock();
         $class = get_class($provider);
         $provider->expects($this->once())->method('register');
         $app->register($provider);

@@ -20,7 +20,7 @@ class FilterTest extends TestCase
     {
         $filter = $this->getMockBuilder(FilterBuilder::class)
             ->setConstructorArgs([$this->app])
-            ->setMethods(['addFilter'])
+            ->onlyMethods(['addFilter'])
             ->getMock();
 
         $filter->expects($this->once())
@@ -46,7 +46,7 @@ class FilterTest extends TestCase
     {
         $filter = $this->getMockBuilder(FilterBuilder::class)
             ->setConstructorArgs([$this->app])
-            ->setMethods(['addFilter'])
+            ->onlyMethods(['addFilter'])
             ->getMock();
 
         $filter->expects($this->exactly(2))
@@ -89,7 +89,7 @@ class FilterTest extends TestCase
     {
         $filter = $this->getMockBuilder(FilterBuilder::class)
             ->setConstructorArgs([$this->app])
-            ->setMethods(['addFilter'])
+            ->onlyMethods(['addFilter'])
             ->getMock();
 
         $filter->expects($this->once())
@@ -108,7 +108,7 @@ class FilterTest extends TestCase
     {
         $filter = $this->getMockBuilder(FilterBuilder::class)
             ->setConstructorArgs([$this->app])
-            ->setMethods(['addFilter'])
+            ->onlyMethods(['addFilter'])
             ->getMock();
 
         $filter->expects($this->exactly(3))

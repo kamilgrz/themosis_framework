@@ -166,6 +166,18 @@ class NullMessageBag implements MessageBag
     /**
      * @inheritdoc
      *
+     * @param string $key
+     *
+     * @return $this
+     */
+    public function forget($key)
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     *
      * @return bool
      */
     public function any(): bool

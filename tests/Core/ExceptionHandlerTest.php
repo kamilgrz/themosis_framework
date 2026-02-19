@@ -44,11 +44,11 @@ class ExceptionHandlerTest extends TestCase
         $this->container = Container::setInstance(new Container());
 
         $this->request = $this->getMockBuilder('stdClass')
-            ->setMethods(['expectsJson'])
+            ->addMethods(['expectsJson'])
             ->getMock();
 
         $this->config = $config = $this->getMockBuilder(Repository::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
         $this->container->singleton('config', function () use ($config) {
             return $config;
@@ -218,8 +218,8 @@ class ExceptionHandlerTest extends TestCase
         $file = $this->createMock(UploadedFile::class);
         $file->method('getPathname')->willReturn('photo.jpg');
         $file->method('getClientOriginalName')->willReturn('photo.jpg');
-        $file->method('getClientMimeType')->willReturn(null);
-        $file->method('getError')->willReturn(null);
+        $file->method('getClientMimeType')->willReturn('application/octet-stream');
+        $file->method('getError')->willReturn(0);
 
         $request = Request::create('/', 'POST', $argumentExpected, [], ['photo' => $file]);
 

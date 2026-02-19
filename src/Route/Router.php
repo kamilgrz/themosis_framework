@@ -4,6 +4,10 @@ namespace Themosis\Route;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Routing\CallableDispatcher;
+use Illuminate\Routing\Contracts\CallableDispatcher as CallableDispatcherContract;
+use Illuminate\Routing\Contracts\ControllerDispatcher as ControllerDispatcherContract;
+use Illuminate\Routing\ControllerDispatcher;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Themosis\Route\Bindings\NullableWpPost;
 
@@ -20,6 +24,20 @@ class Router extends IlluminateRouter
     {
         parent::__construct($events, $container);
         $this->routes = new RouteCollection();
+
+        if ($this->container) {
+            if (! $this->container->bound(CallableDispatcherContract::class)) {
+                $this->container->singleton(CallableDispatcherContract::class, function ($app) {
+                    return new CallableDispatcher($app);
+                });
+            }
+
+            if (! $this->container->bound(ControllerDispatcherContract::class)) {
+                $this->container->singleton(ControllerDispatcherContract::class, function ($app) {
+                    return new ControllerDispatcher($app);
+                });
+            }
+        }
     }
 
     /**
