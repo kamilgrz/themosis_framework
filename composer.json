@@ -1,6 +1,6 @@
 {
-  "name": "themosis/framework",
-  "description": "The Themosis framework.",
+  "name": "kamilgrz/themosis-framework",
+  "description": "The Themosis framework. Laravel 12 version.",
   "keywords": ["themosis", "framework", "wordpress"],
   "license": "GPL-2.0-or-later",
   "support": {
