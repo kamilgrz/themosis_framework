@@ -39,14 +39,14 @@ class Application extends Container implements
     /**
      * Themosis framework version.
      */
-    public const THEMOSIS_VERSION = '3.1.0';
+    public const THEMOSIS_VERSION = '3.2.0';
 
     /**
      * Laravel version.
      *
      * @var string
      */
-    public const VERSION = '8.0.0';
+    public const VERSION = '12.0.0';
 
     /**
      * Application textdomain.
@@ -171,6 +171,14 @@ class Application extends Container implements
             $this->basePath(),
             $this->getCachedPackagesPath(),
         ));
+    }
+
+    /**
+     * Get default locale
+     */
+    public function getFallbackLocale()
+    {
+        return config('app.locale', 'en_GB');
     }
 
     /**
